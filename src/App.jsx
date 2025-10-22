@@ -479,31 +479,4 @@ const TarotPortfolio = () => {
 };
 
 export default TarotPortfolio;
-```
 
-### **9. .gitignore**
-```
-# Dependencies
-node_modules
-
-# Production
-dist
-
-# Local env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories
-.vscode
-.idea
-*.swp
-*.swo
-*~
