@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Sparkles, Moon, ChevronRight, Linkedin, Github, FileText, ExternalLink } from 'lucide-react';
+import { Star, Sparkles, Moon, Linkedin, Github, FileText, ExternalLink } from 'lucide-react';
 
 const experienceCards = [
   {
@@ -134,16 +134,15 @@ const TarotPortfolio = () => {
   ];
 
   const Header = () => (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+    <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-center gap-4 md:gap-8 flex-wrap">
           {['about', 'experience', 'projects', 'leadership'].map((page) => (
             <button
               key={page}
-              onClick={() => {
-                setStage(page);
-                setFlippedCard(null);
-              }}
+              onPointerDown={() => { setStage(page); setFlippedCard(null); }}
+              onClick={() => { setStage(page); setFlippedCard(null); }}
+              style={{ touchAction: 'manipulation' }}
               className={`text-sm md:text-base transition-all duration-300 capitalize font-light tracking-wide ${
                 stage === page ? 'text-emerald-400 scale-110' : 'text-gray-400 hover:text-white'
               }`}
@@ -179,7 +178,7 @@ const TarotPortfolio = () => {
         })}
       </div>
 
-      <div 
+      <div
         className="fixed inset-0 pointer-events-none opacity-20"
         style={{
           background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(139,92,246,0.15), transparent 80%)`
@@ -207,10 +206,9 @@ const TarotPortfolio = () => {
               return (
                 <button
                   key={path.id}
-                  onClick={() => {
-                    setFlippedCard(null);
-                    setStage(path.target);
-                  }}
+                  onPointerDown={() => { setFlippedCard(null); setStage(path.target); }}
+                  onClick={() => { setFlippedCard(null); setStage(path.target); }}
+                  style={{ touchAction: 'manipulation' }}
                   className="group relative p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105"
                 >
                   <Icon className="w-10 h-10 mx-auto mb-4 text-purple-400 group-hover:text-purple-300 transition-colors" />
@@ -243,7 +241,7 @@ const TarotPortfolio = () => {
   const renderAbout = () => (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-black text-white pt-24 p-4 md:p-8 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-black text-white pt-8 md:pt-12 p-4 md:p-8 relative overflow-hidden">
         <div className="fixed inset-0 opacity-30 pointer-events-none">
           {[...Array(120)].map((_, i) => {
             const size = Math.random() * 4 + 1;
@@ -269,17 +267,17 @@ const TarotPortfolio = () => {
           <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-12 mb-12">
             <div className="relative group">
               <div className="absolute inset-0 bg-emerald-500 blur-3xl opacity-20 group-hover:opacity-30 transition-opacity rounded-full"></div>
-              <img 
-                src="/images/profile.jpg" 
-                alt="Profile" 
+              <img
+                src="/images/profile.jpg"
+                alt="Profile"
                 className="relative w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-2 border-emerald-400/30 shadow-2xl"
               />
             </div>
 
             <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              <a 
-                href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9" 
-                target="_blank" 
+              <a
+                href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
@@ -287,10 +285,10 @@ const TarotPortfolio = () => {
                 <span className="font-light">LinkedIn</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
-              
-              <a 
-                href="https://github.com/PragnasriVellanki" 
-                target="_blank" 
+
+              <a
+                href="https://github.com/PragnasriVellanki"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
@@ -298,10 +296,10 @@ const TarotPortfolio = () => {
                 <span className="font-light">GitHub</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
-              
-              <a 
-                href="https://devpost.com/pragnasri-vellanki" 
-                target="_blank" 
+
+              <a
+                href="https://devpost.com/pragnasri-vellanki"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
@@ -309,10 +307,10 @@ const TarotPortfolio = () => {
                 <span className="font-light">Devpost</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
-              
-              <a 
-                href="/resume.pdf" 
-                target="_blank" 
+
+              <a
+                href="/resume.pdf"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
@@ -326,7 +324,8 @@ const TarotPortfolio = () => {
           <div className="flex justify-center px-4">
             <div
               className="relative w-full max-w-md cursor-pointer perspective-1000"
-              style={{ aspectRatio: '2/3' }}
+              style={{ aspectRatio: '2/3', touchAction: 'manipulation' }}
+              onPointerDown={() => setFlippedCard(flippedCard === 'about' ? null : 'about')}
               onClick={() => setFlippedCard(flippedCard === 'about' ? null : 'about')}
             >
               <div
@@ -336,14 +335,14 @@ const TarotPortfolio = () => {
               >
                 <div className="absolute inset-0 backface-hidden">
                   <div className="h-full rounded-xl overflow-hidden shadow-2xl border border-white/20 hover:border-white/40 transition-all duration-500">
-                    <img 
-                      src={aboutCard.img} 
+                    <img
+                      src={aboutCard.img}
                       alt={aboutCard.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
-                
+
                 <div className="absolute inset-0 backface-hidden rotate-y-180">
                   <div className="h-full bg-slate-900/95 backdrop-blur p-6 md:p-8 rounded-xl border border-emerald-400/30 overflow-auto shadow-2xl">
                     <h3 className="text-xl md:text-2xl font-light text-emerald-300 mb-6 text-center">{aboutCard.title}</h3>
@@ -379,7 +378,7 @@ const TarotPortfolio = () => {
   const renderCardSection = (title, cards, bgGradient) => (
     <>
       <Header />
-      <div className={`min-h-screen ${bgGradient} text-white pt-24 p-4 md:p-8 relative overflow-hidden`}>
+      <div className={`min-h-screen ${bgGradient} text-white pt-8 md:pt-12 p-4 md:p-8 relative overflow-hidden`}>
         <div className="fixed inset-0 opacity-30 pointer-events-none">
           {[...Array(120)].map((_, i) => {
             const size = Math.random() * 4 + 1;
@@ -401,18 +400,20 @@ const TarotPortfolio = () => {
           })}
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-light text-center mb-12 md:mb-16 text-white relative z-10 tracking-wide"
-          style={{
-            textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.3)'
-          }}
-        >{title}</h1>
-        
+        <h1
+          className="text-3xl md:text-5xl font-light text-center mb-12 md:mb-16 text-white relative z-10 tracking-wide"
+          style={{ textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.3)' }}
+        >
+          {title}
+        </h1>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto relative z-10 px-4">
           {cards.map((card, idx) => (
             <div
               key={idx}
               className="relative w-full cursor-pointer perspective-1000"
-              style={{ aspectRatio: '2/3' }}
+              style={{ aspectRatio: '2/3', touchAction: 'manipulation' }}
+              onPointerDown={() => setFlippedCard(flippedCard === idx ? null : idx)}
               onClick={() => setFlippedCard(flippedCard === idx ? null : idx)}
             >
               <div
@@ -422,14 +423,14 @@ const TarotPortfolio = () => {
               >
                 <div className="absolute inset-0 backface-hidden">
                   <div className="h-full rounded-xl border border-white/20 overflow-hidden hover:border-white/40 transition-all duration-500 shadow-2xl">
-                    <img 
-                      src={card.img} 
+                    <img
+                      src={card.img}
                       alt={card.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
-                
+
                 <div className="absolute inset-0 backface-hidden rotate-y-180">
                   <div className="h-full bg-slate-900/95 backdrop-blur p-4 md:p-6 rounded-xl border border-purple-400/30 overflow-auto shadow-2xl">
                     <h3 className="text-lg md:text-xl font-light text-purple-300 mb-3 md:mb-4">{card.title}</h3>
@@ -460,18 +461,18 @@ const TarotPortfolio = () => {
   if (stage === 'intro') return renderIntro();
   if (stage === 'about') return renderAbout();
   if (stage === 'experience') return renderCardSection(
-    'The Path of Strategy', 
-    experienceCards, 
+    'The Path of Strategy',
+    experienceCards,
     'bg-gradient-to-b from-red-950 via-red-900 to-black'
   );
   if (stage === 'projects') return renderCardSection(
-    'The Path of Creation', 
-    projectCards, 
+    'The Path of Creation',
+    projectCards,
     'bg-gradient-to-b from-blue-950 via-blue-900 to-black'
   );
   if (stage === 'leadership') return renderCardSection(
-    'The Path of Guidance', 
-    leadershipCards, 
+    'The Path of Guidance',
+    leadershipCards,
     'bg-gradient-to-b from-yellow-950 via-yellow-900 to-black'
   );
 
