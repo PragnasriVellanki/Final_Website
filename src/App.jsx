@@ -99,17 +99,7 @@ const aboutCard = {
   }
 };
 
-// color helpers (kept for future theming if you want)
-const activeColorClass = (page) => {
-  switch (page) {
-    case 'about': return 'text-emerald-400';
-    case 'experience': return 'text-red-400';
-    case 'projects': return 'text-blue-400';
-    case 'leadership': return 'text-yellow-400';
-    default: return 'text-emerald-400';
-  }
-};
-
+// === Color helpers (border only stays dynamic) ===
 const headerBorderClass = (stage) => {
   switch (stage) {
     case 'about': return 'border-emerald-400/30';
@@ -119,6 +109,24 @@ const headerBorderClass = (stage) => {
     default: return 'border-white/10';
   }
 };
+
+// === Single-tap external link button (kills iOS double-tap) ===
+const LinkBtn = ({ href, children }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    onTouchStart={() => {}} // prevents first-tap hover capture on iOS
+    style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
+    className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 
+               bg-white/5 md:hover:bg-white/10 
+               border border-white/10 rounded-lg 
+               transition-all duration-300 
+               group text-sm md:text-base select-none cursor-pointer"
+  >
+    {children}
+  </a>
+);
 
 const TarotPortfolio = () => {
   const [stage, setStage] = useState('intro');
@@ -140,9 +148,7 @@ const TarotPortfolio = () => {
   }, [stage, textIndex]);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
+    const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
@@ -296,50 +302,31 @@ const TarotPortfolio = () => {
               />
             </div>
 
+            {/* External links (single-tap) */}
             <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              <a
-                href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
-              >
+              <LinkBtn href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9">
                 <Linkedin className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">LinkedIn</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
-              </a>
+              </LinkBtn>
 
-              <a
-                href="https://github.com/PragnasriVellanki"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
-              >
+              <LinkBtn href="https://github.com/PragnasriVellanki">
                 <Github className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">GitHub</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
-              </a>
+              </LinkBtn>
 
-              <a
-                href="https://devpost.com/pragnasri-vellanki"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
-              >
+              <LinkBtn href="https://devpost.com/pragnasri-vellanki">
                 <Star className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">Devpost</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
-              </a>
+              </LinkBtn>
 
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
-              >
+              <LinkBtn href="/resume.pdf">
                 <FileText className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">Resume</span>
                 <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
-              </a>
+              </LinkBtn>
             </div>
           </div>
 
@@ -443,7 +430,7 @@ const TarotPortfolio = () => {
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setFlippedCard(flippedCard === idx ? null : idx)}
             >
               <div
-                className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
+                className={`relative w/full h/full transition-transform duration-700 transform-style-3d ${
                   flippedCard === idx ? 'rotate-y-180' : ''
                 }`}
               >
