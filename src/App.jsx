@@ -134,15 +134,16 @@ const TarotPortfolio = () => {
   ];
 
   const Header = () => (
-    <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-center gap-4 md:gap-8 flex-wrap">
           {['about', 'experience', 'projects', 'leadership'].map((page) => (
             <button
               key={page}
-              onPointerDown={() => { setStage(page); setFlippedCard(null); }}
-              onClick={() => { setStage(page); setFlippedCard(null); }}
-              style={{ touchAction: 'manipulation' }}
+              onClick={() => {
+                setStage(page);
+                setFlippedCard(null);
+              }}
               className={`text-sm md:text-base transition-all duration-300 capitalize font-light tracking-wide ${
                 stage === page ? 'text-emerald-400 scale-110' : 'text-gray-400 hover:text-white'
               }`}
@@ -206,9 +207,10 @@ const TarotPortfolio = () => {
               return (
                 <button
                   key={path.id}
-                  onPointerDown={() => { setFlippedCard(null); setStage(path.target); }}
-                  onClick={() => { setFlippedCard(null); setStage(path.target); }}
-                  style={{ touchAction: 'manipulation' }}
+                  onClick={() => {
+                    setFlippedCard(null);
+                    setStage(path.target);
+                  }}
                   className="group relative p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105"
                 >
                   <Icon className="w-10 h-10 mx-auto mb-4 text-purple-400 group-hover:text-purple-300 transition-colors" />
@@ -221,13 +223,259 @@ const TarotPortfolio = () => {
           </div>
         )}
       </div>
+
+      <style>{`
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 1; }
+        }
+        @keyframes fade-in {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+      `}</style>
     </div>
   );
 
-  // === All other rendering functions remain unchanged except pt-24 → pt-8 and card onPointerDown ===
-  // (For brevity, not repeating identical content here, but the full file includes updated padding and pointer handlers in each section.)
+  const renderAbout = () => (
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-black text-white pt-24 p-4 md:p-8 relative overflow-hidden">
+        <div className="fixed inset-0 opacity-30 pointer-events-none">
+          {[...Array(120)].map((_, i) => {
+            const size = Math.random() * 4 + 1;
+            return (
+              <div
+                key={i}
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: size + 'px',
+                  height: size + 'px',
+                  top: Math.random() * 100 + '%',
+                  left: Math.random() * 100 + '%',
+                  animation: `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
+                  animationDelay: Math.random() * 3 + 's',
+                  boxShadow: `0 0 ${size * 2}px ${size}px rgba(255,255,255,0.3)`
+                }}
+              />
+            );
+          })}
+        </div>
 
-  // -- snip for brevity --
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-12 mb-12">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-emerald-500 blur-3xl opacity-20 group-hover:opacity-30 transition-opacity rounded-full"></div>
+              <img 
+                src="/images/profile.jpg" 
+                alt="Profile" 
+                className="relative w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-2 border-emerald-400/30 shadow-2xl"
+              />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+              <a 
+                href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+              >
+                <Linkedin className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="font-light">LinkedIn</span>
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              
+              <a 
+                href="https://github.com/PragnasriVellanki" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+              >
+                <Github className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="font-light">GitHub</span>
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              
+              <a 
+                href="https://devpost.com/pragnasri-vellanki" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+              >
+                <Star className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="font-light">Devpost</span>
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              
+              <a 
+                href="/resume.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+              >
+                <FileText className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="font-light">Resume</span>
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+            </div>
+          </div>
+
+          <div className="flex justify-center px-4">
+            <div
+              className="relative w-full max-w-md cursor-pointer perspective-1000"
+              style={{ aspectRatio: '2/3' }}
+              onClick={() => setFlippedCard(flippedCard === 'about' ? null : 'about')}
+            >
+              <div
+                className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
+                  flippedCard === 'about' ? 'rotate-y-180' : ''
+                }`}
+              >
+                <div className="absolute inset-0 backface-hidden">
+                  <div className="h-full rounded-xl overflow-hidden shadow-2xl border border-white/20 hover:border-white/40 transition-all duration-500">
+                    <img 
+                      src={aboutCard.img} 
+                      alt={aboutCard.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 backface-hidden rotate-y-180">
+                  <div className="h-full bg-slate-900/95 backdrop-blur p-6 md:p-8 rounded-xl border border-emerald-400/30 overflow-auto shadow-2xl">
+                    <h3 className="text-xl md:text-2xl font-light text-emerald-300 mb-6 text-center">{aboutCard.title}</h3>
+                    <ul className="text-emerald-100 text-sm md:text-base space-y-3 leading-relaxed">
+                      <li><span className="font-semibold text-emerald-300">Education:</span> {aboutCard.back.education}</li>
+                      <li><span className="font-semibold text-emerald-300">What I build:</span> {aboutCard.back.builds}</li>
+                      <li><span className="font-semibold text-emerald-300">My approach:</span> {aboutCard.back.approach}</li>
+                      <li><span className="font-semibold text-emerald-300">Impact:</span> {aboutCard.back.impact}</li>
+                      <li><span className="font-semibold text-emerald-300">Research:</span> {aboutCard.back.research}</li>
+                      <li className="pt-2 text-emerald-200 text-sm italic">{aboutCard.back.offDuty}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-gray-400 text-xs md:text-sm mt-6 italic font-light">
+            Click the card to reveal more
+          </p>
+        </div>
+
+        <style>{`
+          .perspective-1000 { perspective: 1000px; }
+          .transform-style-3d { transform-style: preserve-3d; }
+          .backface-hidden { backface-visibility: hidden; }
+          .rotate-y-180 { transform: rotateY(180deg); }
+        `}</style>
+      </div>
+    </>
+  );
+
+  const renderCardSection = (title, cards, bgGradient) => (
+    <>
+      <Header />
+      <div className={`min-h-screen ${bgGradient} text-white pt-24 p-4 md:p-8 relative overflow-hidden`}>
+        <div className="fixed inset-0 opacity-30 pointer-events-none">
+          {[...Array(120)].map((_, i) => {
+            const size = Math.random() * 4 + 1;
+            return (
+              <div
+                key={i}
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: size + 'px',
+                  height: size + 'px',
+                  top: Math.random() * 100 + '%',
+                  left: Math.random() * 100 + '%',
+                  animation: `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
+                  animationDelay: Math.random() * 3 + 's',
+                  boxShadow: `0 0 ${size * 2}px ${size}px rgba(255,255,255,0.3)`
+                }}
+              />
+            );
+          })}
+        </div>
+
+        <h1 className="text-3xl md:text-5xl font-light text-center mb-12 md:mb-16 text-white relative z-10 tracking-wide"
+          style={{
+            textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.3)'
+          }}
+        >{title}</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto relative z-10 px-4">
+          {cards.map((card, idx) => (
+            <div
+              key={idx}
+              className="relative w-full cursor-pointer perspective-1000"
+              style={{ aspectRatio: '2/3' }}
+              onClick={() => setFlippedCard(flippedCard === idx ? null : idx)}
+            >
+              <div
+                className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
+                  flippedCard === idx ? 'rotate-y-180' : ''
+                }`}
+              >
+                <div className="absolute inset-0 backface-hidden">
+                  <div className="h-full rounded-xl border border-white/20 overflow-hidden hover:border-white/40 transition-all duration-500 shadow-2xl">
+                    <img 
+                      src={card.img} 
+                      alt={card.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 backface-hidden rotate-y-180">
+                  <div className="h-full bg-slate-900/95 backdrop-blur p-4 md:p-6 rounded-xl border border-purple-400/30 overflow-auto shadow-2xl">
+                    <h3 className="text-lg md:text-xl font-light text-purple-300 mb-3 md:mb-4">{card.title}</h3>
+                    <div className="text-sm md:text-base text-purple-100 whitespace-pre-line leading-relaxed">
+                      {card.back}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-center text-gray-400 text-xs md:text-sm mt-8 md:mt-12 italic font-light relative z-10">
+          Click each card to explore
+        </p>
+
+        <style>{`
+          .perspective-1000 { perspective: 1000px; }
+          .transform-style-3d { transform-style: preserve-3d; }
+          .backface-hidden { backface-visibility: hidden; }
+          .rotate-y-180 { transform: rotateY(180deg); }
+        `}</style>
+      </div>
+    </>
+  );
+
+  if (stage === 'intro') return renderIntro();
+  if (stage === 'about') return renderAbout();
+  if (stage === 'experience') return renderCardSection(
+    'The Path of Strategy', 
+    experienceCards, 
+    'bg-gradient-to-b from-red-950 via-red-900 to-black'
+  );
+  if (stage === 'projects') return renderCardSection(
+    'The Path of Creation', 
+    projectCards, 
+    'bg-gradient-to-b from-blue-950 via-blue-900 to-black'
+  );
+  if (stage === 'leadership') return renderCardSection(
+    'The Path of Guidance', 
+    leadershipCards, 
+    'bg-gradient-to-b from-yellow-950 via-yellow-900 to-black'
+  );
+
+  return null;
 };
 
 export default TarotPortfolio;
