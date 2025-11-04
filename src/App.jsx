@@ -99,6 +99,27 @@ const aboutCard = {
   }
 };
 
+// === Helpers for color coordination ===
+const activeColorClass = (page) => {
+  switch (page) {
+    case 'about': return 'text-emerald-400';
+    case 'experience': return 'text-red-400';
+    case 'projects': return 'text-blue-400';
+    case 'leadership': return 'text-yellow-400';
+    default: return 'text-emerald-400';
+  }
+};
+
+const headerBorderClass = (stage) => {
+  switch (stage) {
+    case 'about': return 'border-emerald-400/30';
+    case 'experience': return 'border-red-400/30';
+    case 'projects': return 'border-blue-400/30';
+    case 'leadership': return 'border-yellow-400/30';
+    default: return 'border-white/10';
+  }
+};
+
 const TarotPortfolio = () => {
   const [stage, setStage] = useState('intro');
   const [flippedCard, setFlippedCard] = useState(null);
@@ -106,7 +127,7 @@ const TarotPortfolio = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const introTexts = [
-    "Data architect. AI builder. Research explorer.",
+    "Data Engineer. AI Builder. Research Explorer.",
     "Where strategy meets innovation.",
     "Choose your journey."
   ];
@@ -134,7 +155,7 @@ const TarotPortfolio = () => {
   ];
 
   const Header = () => (
-    <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+    <nav className={`sticky top-0 z-50 bg-black shadow-sm border-b ${headerBorderClass(stage)}`}>
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-center gap-4 md:gap-8 flex-wrap">
           {['about', 'experience', 'projects', 'leadership'].map((page) => (
@@ -143,7 +164,7 @@ const TarotPortfolio = () => {
               onPointerUp={() => { setStage(page); setFlippedCard(null); }}
               style={{ touchAction: 'manipulation' }}
               className={`text-sm md:text-base transition-all duration-300 capitalize font-light tracking-wide ${
-                stage === page ? 'text-emerald-400 scale-110' : 'text-gray-400 hover:text-white'
+                stage === page ? `${activeColorClass(page)} scale-110` : 'text-gray-400 hover:text-white'
               }`}
             >
               {page}
