@@ -99,7 +99,7 @@ const aboutCard = {
   }
 };
 
-// === Helpers for color coordination ===
+// color helpers (kept for future theming if you want)
 const activeColorClass = (page) => {
   switch (page) {
     case 'about': return 'text-emerald-400';
@@ -155,16 +155,19 @@ const TarotPortfolio = () => {
   ];
 
   const Header = () => (
-    <nav className={`sticky top-0 z-50 bg-black shadow-sm border-b ${headerBorderClass(stage)}`}>
+    <nav
+      className={`sticky top-0 z-50 border-b ${headerBorderClass(stage)} shadow-sm`}
+      style={{ backgroundColor: '#000', WebkitTapHighlightColor: 'transparent' }}
+    >
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-center gap-4 md:gap-8 flex-wrap">
           {['about', 'experience', 'projects', 'leadership'].map((page) => (
             <button
               key={page}
-              onPointerUp={() => { setStage(page); setFlippedCard(null); }}
+              onClick={() => { setStage(page); setFlippedCard(null); }}
               style={{ touchAction: 'manipulation' }}
-              className={`text-sm md:text-base transition-all duration-300 capitalize font-light tracking-wide ${
-                stage === page ? `${activeColorClass(page)} scale-110` : 'text-gray-400 hover:text-white'
+              className={`text-sm md:text-base transition-all duration-300 capitalize font-light tracking-wide select-none cursor-pointer ${
+                stage === page ? 'text-white underline underline-offset-8 decoration-1' : 'text-white/80 md:hover:text-white'
               }`}
             >
               {page}
@@ -226,14 +229,14 @@ const TarotPortfolio = () => {
               return (
                 <button
                   key={path.id}
-                  onPointerUp={() => { setFlippedCard(null); setStage(path.target); }}
+                  onClick={() => { setFlippedCard(null); setStage(path.target); }}
                   style={{ touchAction: 'manipulation' }}
-                  className="group relative p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105"
+                  className="group relative p-8 bg-white/5 border border-white/10 rounded-xl md:hover:bg-white/10 md:hover:border-white/20 transition-all duration-500 hover:scale-105 select-none cursor-pointer"
                 >
-                  <Icon className="w-10 h-10 mx-auto mb-4 text-purple-400 group-hover:text-purple-300 transition-colors" />
+                  <Icon className="w-10 h-10 mx-auto mb-4 text-purple-400 md:group-hover:text-purple-300 transition-colors" />
                   <h3 className="text-lg font-light text-white mb-2">{path.label}</h3>
                   <p className="text-sm text-gray-400">{path.subtitle}</p>
-                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/10 to-transparent" />
+                  <div className="absolute inset-0 rounded-xl opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/10 to-transparent" />
                 </button>
               );
             })}
@@ -298,44 +301,44 @@ const TarotPortfolio = () => {
                 href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
                 <Linkedin className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">LinkedIn</span>
-                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
               </a>
 
               <a
                 href="https://github.com/PragnasriVellanki"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
                 <Github className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">GitHub</span>
-                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
               </a>
 
               <a
                 href="https://devpost.com/pragnasri-vellanki"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
                 <Star className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">Devpost</span>
-                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
               </a>
 
               <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
+                className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-white/5 md:hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 backdrop-blur-sm group text-sm md:text-base"
               >
                 <FileText className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">Resume</span>
-                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 opacity-0 md:group-hover:opacity-100 transition-opacity" />
               </a>
             </div>
           </div>
@@ -355,7 +358,7 @@ const TarotPortfolio = () => {
                 }`}
               >
                 <div className="absolute inset-0 backface-hidden">
-                  <div className="h-full rounded-xl overflow-hidden shadow-2xl border border-white/20 hover:border-white/40 transition-all duration-500">
+                  <div className="h-full rounded-xl overflow-hidden shadow-2xl border border-white/20 md:hover:border-white/40 transition-all duration-500">
                     <img
                       src={aboutCard.img}
                       alt={aboutCard.title}
@@ -445,7 +448,7 @@ const TarotPortfolio = () => {
                 }`}
               >
                 <div className="absolute inset-0 backface-hidden">
-                  <div className="h-full rounded-xl border border-white/20 overflow-hidden hover:border-white/40 transition-all duration-500 shadow-2xl">
+                  <div className="h-full rounded-xl border border-white/20 md:hover:border-white/40 transition-all duration-500">
                     <img
                       src={card.img}
                       alt={card.title}
