@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Star, Sparkles, Moon, Linkedin, Github, FileText, ExternalLink } from 'lucide-react';
 
 const experienceCards = [
@@ -99,7 +99,6 @@ const aboutCard = {
   }
 };
 
-// === Color helpers (border only stays dynamic) ===
 const headerBorderClass = (stage) => {
   switch (stage) {
     case 'about': return 'border-emerald-400/30';
@@ -110,23 +109,32 @@ const headerBorderClass = (stage) => {
   }
 };
 
-// === Single-tap external link button (kills iOS double-tap) ===
-const LinkBtn = ({ href, children }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    onTouchStart={() => {}} // prevents first-tap hover capture on iOS
-    style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
-    className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 
-               bg-white/5 md:hover:bg-white/10 
-               border border-white/10 rounded-lg 
-               transition-all duration-300 
-               group text-sm md:text-base select-none cursor-pointer"
-  >
-    {children}
-  </a>
-);
+// ---- Single-tap external link button (iOS-safe) ----
+const LinkBtn = ({ href, children }) => {
+  const open = useCallback((e) => {
+    e.preventDefault();
+    // Use both click and touchend paths; either will count as a user gesture.
+    window.open(href, '_blank', 'noopener,noreferrer');
+  }, [href]);
+
+  return (
+    <button
+      type="button"
+      onClick={open}
+      onTouchEnd={open}
+      // Tweak tap behavior & focus styles for mobile
+      style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
+      className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3
+                 bg-white/5 md:hover:bg-white/10
+                 border border-white/10 rounded-lg
+                 transition-all duration-300
+                 group text-sm md:text-base select-none cursor-pointer
+                 focus:outline-none"
+    >
+      {children}
+    </button>
+  );
+};
 
 const TarotPortfolio = () => {
   const [stage, setStage] = useState('intro');
@@ -162,8 +170,8 @@ const TarotPortfolio = () => {
 
   const Header = () => (
     <nav
-      className={`sticky top-0 z-50 border-b ${headerBorderClass(stage)} shadow-sm`}
-      style={{ backgroundColor: '#000', WebkitTapHighlightColor: 'transparent' }}
+      className={`sticky top-0 z-50 bg-black border-b ${headerBorderClass(stage)} shadow-sm`}
+      style={{ WebkitTapHighlightColor: 'transparent' }}
     >
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-center gap-4 md:gap-8 flex-wrap">
@@ -302,8 +310,8 @@ const TarotPortfolio = () => {
               />
             </div>
 
-            {/* External links (single-tap) */}
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            {/* External links (now <button> + programmatic open) */}
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4 z-10">
               <LinkBtn href="https://linkedin.com/in/pragnasri-vellanki-6b10141a9">
                 <Linkedin className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-light">LinkedIn</span>
@@ -430,7 +438,7 @@ const TarotPortfolio = () => {
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setFlippedCard(flippedCard === idx ? null : idx)}
             >
               <div
-                className={`relative w/full h/full transition-transform duration-700 transform-style-3d ${
+                className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
                   flippedCard === idx ? 'rotate-y-180' : ''
                 }`}
               >
