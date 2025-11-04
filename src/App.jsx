@@ -140,8 +140,7 @@ const TarotPortfolio = () => {
           {['about', 'experience', 'projects', 'leadership'].map((page) => (
             <button
               key={page}
-              onPointerDown={() => { setStage(page); setFlippedCard(null); }}
-              onClick={() => { setStage(page); setFlippedCard(null); }}
+              onPointerUp={() => { setStage(page); setFlippedCard(null); }}
               style={{ touchAction: 'manipulation' }}
               className={`text-sm md:text-base transition-all duration-300 capitalize font-light tracking-wide ${
                 stage === page ? 'text-emerald-400 scale-110' : 'text-gray-400 hover:text-white'
@@ -206,8 +205,7 @@ const TarotPortfolio = () => {
               return (
                 <button
                   key={path.id}
-                  onPointerDown={() => { setFlippedCard(null); setStage(path.target); }}
-                  onClick={() => { setFlippedCard(null); setStage(path.target); }}
+                  onPointerUp={() => { setFlippedCard(null); setStage(path.target); }}
                   style={{ touchAction: 'manipulation' }}
                   className="group relative p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105"
                 >
@@ -324,9 +322,11 @@ const TarotPortfolio = () => {
           <div className="flex justify-center px-4">
             <div
               className="relative w-full max-w-md cursor-pointer perspective-1000"
-              style={{ aspectRatio: '2/3', touchAction: 'manipulation' }}
-              onPointerDown={() => setFlippedCard(flippedCard === 'about' ? null : 'about')}
-              onClick={() => setFlippedCard(flippedCard === 'about' ? null : 'about')}
+              style={{ aspectRatio: '2/3', touchAction: 'manipulation', userSelect: 'none' }}
+              onPointerUp={() => setFlippedCard(flippedCard === 'about' ? null : 'about')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setFlippedCard(flippedCard === 'about' ? null : 'about')}
             >
               <div
                 className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
@@ -367,9 +367,9 @@ const TarotPortfolio = () => {
 
         <style>{`
           .perspective-1000 { perspective: 1000px; }
-          .transform-style-3d { transform-style: preserve-3d; }
-          .backface-hidden { backface-visibility: hidden; }
-          .rotate-y-180 { transform: rotateY(180deg); }
+          .transform-style-3d { transform-style: preserve-3d; -webkit-transform-style: preserve-3d; }
+          .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+          .rotate-y-180 { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); will-change: transform; }
         `}</style>
       </div>
     </>
@@ -412,9 +412,11 @@ const TarotPortfolio = () => {
             <div
               key={idx}
               className="relative w-full cursor-pointer perspective-1000"
-              style={{ aspectRatio: '2/3', touchAction: 'manipulation' }}
-              onPointerDown={() => setFlippedCard(flippedCard === idx ? null : idx)}
-              onClick={() => setFlippedCard(flippedCard === idx ? null : idx)}
+              style={{ aspectRatio: '2/3', touchAction: 'manipulation', userSelect: 'none' }}
+              onPointerUp={() => setFlippedCard(flippedCard === idx ? null : idx)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setFlippedCard(flippedCard === idx ? null : idx)}
             >
               <div
                 className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
@@ -450,9 +452,9 @@ const TarotPortfolio = () => {
 
         <style>{`
           .perspective-1000 { perspective: 1000px; }
-          .transform-style-3d { transform-style: preserve-3d; }
-          .backface-hidden { backface-visibility: hidden; }
-          .rotate-y-180 { transform: rotateY(180deg); }
+          .transform-style-3d { transform-style: preserve-3d; -webkit-transform-style: preserve-3d; }
+          .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+          .rotate-y-180 { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); will-change: transform; }
         `}</style>
       </div>
     </>
